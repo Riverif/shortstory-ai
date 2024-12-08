@@ -47,7 +47,7 @@ export const ShortStory = ({
   return (
     <motion.div
       variants={containerVar}
-      className="relative flex aspect-square w-14 items-center justify-center bg-black opacity-0"
+      className="relative flex aspect-square w-14 items-center justify-center bg-background opacity-0"
     >
       <motion.div
         variants={{ generate: { opacity: 1 }, finish: { opacity: 0 } }}
@@ -56,15 +56,16 @@ export const ShortStory = ({
       </motion.div>
       <motion.div
         variants={{ generate: { opacity: 0 }, finish: { opacity: 1 } }}
-        className="absolute inset-0 flex h-[80%] flex-col gap-2 overflow-y-scroll px-10 pt-6"
+        className="absolute inset-0 flex h-[87%] flex-col gap-2 overflow-y-scroll px-6 pt-6"
       >
-        <h2 className="text-2xl font-semibold">{theStory.title}</h2>
-        <p className="whitespace-pre-wrap">{theStory.story}</p>
-        {/* {story} */}
+        <h2 className="font-semibold md:text-2xl">{theStory.title}</h2>
+        <p className="whitespace-pre-wrap text-sm md:text-base">
+          {theStory.story}
+        </p>
       </motion.div>
       <motion.div
         variants={{ generate: { opacity: 0 }, finish: { opacity: 1 } }}
-        className="absolute bottom-10 flex gap-5 rounded-full p-2 dark:bg-black"
+        className="absolute bottom-5 flex gap-5 rounded-full"
       >
         <motion.button
           onClick={close}

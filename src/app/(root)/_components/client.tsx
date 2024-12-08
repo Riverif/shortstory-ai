@@ -106,16 +106,16 @@ export const HomeClient = () => {
       <motion.div
         initial="init"
         animate={animState}
-        className="w-[40%] space-y-3 text-center"
+        className="space-y-3 text-center md:max-w-[600px]"
       >
         <motion.h1
           variants={initVar}
-          className={cn("text-7xl", useFontRye.className)}
+          className={cn("text-4xl md:text-7xl", useFontRye.className)}
         >
-          <span className="text-[#FCEDB4]">Short </span>
+          <span className="text-blue-900 dark:text-cream">Short </span>
           Story AI
         </motion.h1>
-        <motion.p variants={initVar}>
+        <motion.p variants={initVar} className="text-xs md:text-base">
           Driven by AI, painlessly construct unique stories, illustrate
           thrilling tales, write seductive romances, or just fool around. No
           censorship or guidelines - anything goes!
@@ -126,12 +126,12 @@ export const HomeClient = () => {
       <motion.div
         initial="init"
         animate={animState}
-        className="w-[40%] space-y-3 text-center"
+        className="space-y-3 text-center"
       >
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex items-start justify-center space-x-2"
+            className="flex flex-wrap items-start justify-center gap-4"
           >
             <motion.div variants={initVar}>
               <FormField
@@ -141,7 +141,7 @@ export const HomeClient = () => {
                   <FormItem>
                     <Select onValueChange={field.onChange}>
                       <FormControl>
-                        <SelectTrigger className="flex w-[180px] items-center justify-center rounded-full p-2 font-bold hover:brightness-90 dark:bg-[#FCEDB4] dark:text-black">
+                        <SelectTrigger className="flex w-[180px] items-center justify-center rounded-full bg-blue-900 font-bold text-white hover:brightness-90 dark:bg-[#FCEDB4] dark:text-black">
                           <SelectValue placeholder="Select a genre" />
                         </SelectTrigger>
                       </FormControl>
@@ -164,7 +164,7 @@ export const HomeClient = () => {
               <motion.button
                 type="submit"
                 variants={initVar}
-                className="w-[300px] rounded-full p-2 font-bold hover:brightness-90 dark:bg-[#FCEDB4] dark:text-black"
+                className="rounded-full bg-blue-950 p-2 px-6 text-sm font-bold text-white hover:brightness-90 dark:bg-[#FCEDB4] dark:text-black md:w-[300px] md:text-base"
               >
                 Generate{" "}
                 <span className="underline underline-offset-8">
