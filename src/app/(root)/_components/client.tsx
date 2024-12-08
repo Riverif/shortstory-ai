@@ -44,9 +44,17 @@ const initVar: Variants = {
 
 type AnimState = "start" | "generate" | "finish";
 
+export type Log = {
+  role: "user" | "assistant" | "system";
+  content: string;
+};
+
 export const HomeClient = () => {
   const [animState, setAnimState] = useState<AnimState>("start");
   const [wordLong, setWordLong] = useState(100);
+
+  const [story, setStory] = useState("");
+  const [log, setLog] = useState<Log[]>([]);
 
   const form = useForm<z.infer<typeof shortStoryChema>>({
     resolver: zodResolver(shortStoryChema),
@@ -58,10 +66,31 @@ export const HomeClient = () => {
 
   const onSubmit = async (value: z.infer<typeof shortStoryChema>) => {
     try {
-      console.log(value);
       setAnimState("generate");
+      const body = {
+        log,
+        genre: value.genre,
+        wordLong: value.wordLong,
+      };
+
+      await fetch("/api/story", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setStory(data.story);
+          setLog([...log, ...data.log]);
+        })
+        .catch((error) => console.error(error));
     } catch (error) {
-      console.log(error);
+      console.log("ERROR:", error);
     } finally {
       setAnimState("finish");
     }
@@ -112,7 +141,7 @@ export const HomeClient = () => {
                   <FormItem>
                     <Select onValueChange={field.onChange}>
                       <FormControl>
-                        <SelectTrigger className="flex w-[180px] items-center justify-center rounded-full p-2 font-bold dark:bg-[#FCEDB4] dark:text-black">
+                        <SelectTrigger className="flex w-[180px] items-center justify-center rounded-full p-2 font-bold hover:brightness-90 dark:bg-[#FCEDB4] dark:text-black">
                           <SelectValue placeholder="Select a genre" />
                         </SelectTrigger>
                       </FormControl>
@@ -126,7 +155,7 @@ export const HomeClient = () => {
                         </SelectGroup>
                       </SelectContent>
                     </Select>
-                    <FormMessage />
+                    <FormMessage className="rounded-full bg-white p-1 text-sm" />
                   </FormItem>
                 )}
               />
@@ -135,7 +164,7 @@ export const HomeClient = () => {
               <motion.button
                 type="submit"
                 variants={initVar}
-                className="w-[300px] rounded-full p-2 font-bold dark:bg-[#FCEDB4] dark:text-black"
+                className="w-[300px] rounded-full p-2 font-bold hover:brightness-90 dark:bg-[#FCEDB4] dark:text-black"
               >
                 Generate{" "}
                 <span className="underline underline-offset-8">
@@ -144,11 +173,26 @@ export const HomeClient = () => {
                 word story
               </motion.button>
               <motion.div variants={initVar} className="space-y-2">
-                <Slider
-                  max={500}
-                  min={100}
-                  onValueChange={(v) => setWordLong(v[0])}
+                <FormField
+                  control={form.control}
+                  name="wordLong"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Slider
+                          max={500}
+                          min={100}
+                          onValueChange={(v) => {
+                            field.onChange(v);
+                            setWordLong(v[0]);
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage className="rounded-full bg-white p-1 text-sm" />
+                    </FormItem>
+                  )}
                 />
+
                 <p className="text-left text-sm">Custom Word Number</p>
               </motion.div>
             </div>
@@ -159,7 +203,7 @@ export const HomeClient = () => {
         animate={animState}
         className="absolute left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%]"
       >
-        <ShortStory close={close} />
+        <ShortStory close={close} story={story} />
       </motion.div>
     </div>
   );

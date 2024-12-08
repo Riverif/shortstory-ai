@@ -71,6 +71,28 @@ body {
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  position: fixed;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 :root {
   --finish-width: 800px;
   --finish-height: 600px;

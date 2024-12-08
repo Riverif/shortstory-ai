@@ -1,6 +1,8 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { parseStory } from "@/lib/story-format";
+import { Copy, Loader2, XCircle } from "lucide-react";
 import { motion, Variants } from "motion/react";
 
 const containerVar: Variants = {
@@ -21,7 +23,27 @@ const containerVar: Variants = {
   },
 };
 
-export const ShortStory = ({ close }: { close: () => void }) => {
+export const ShortStory = ({
+  close,
+  story,
+}: {
+  close: () => void;
+  story?: string;
+}) => {
+  const theStory = parseStory(story);
+  const { toast } = useToast();
+
+  const copyCodeToClipboard = () => {
+    navigator.clipboard
+      .writeText(story || "")
+      .then(() => {
+        toast({ title: "Success copy to clipboard" });
+      })
+      .catch((err) => {
+        console.error("Failed to copy code:", err);
+      });
+  };
+
   return (
     <motion.div
       variants={containerVar}
@@ -32,20 +54,32 @@ export const ShortStory = ({ close }: { close: () => void }) => {
       >
         <Loader2 className="w-6 animate-spin" />
       </motion.div>
-      <motion.button
+      <motion.div
         variants={{ generate: { opacity: 0 }, finish: { opacity: 1 } }}
-        className="absolute bottom-5 left-5"
-        onClick={close}
+        className="absolute inset-0 flex h-[80%] flex-col gap-2 overflow-y-scroll px-10 pt-6"
       >
-        Close
-      </motion.button>
-      <motion.button
+        <h2 className="text-2xl font-semibold">{theStory.title}</h2>
+        <p className="whitespace-pre-wrap">{theStory.story}</p>
+        {/* {story} */}
+      </motion.div>
+      <motion.div
         variants={{ generate: { opacity: 0 }, finish: { opacity: 1 } }}
-        className="absolute right-5 top-5"
-        onClick={close}
+        className="absolute bottom-10 flex gap-5 rounded-full p-2 dark:bg-black"
       >
-        Copy
-      </motion.button>
+        <motion.button
+          onClick={close}
+          className="flex items-center gap-1 hover:brightness-75"
+        >
+          <XCircle className="aspect-square h-5" />
+          Close
+        </motion.button>
+        <motion.button
+          onClick={copyCodeToClipboard}
+          className="flex items-center gap-1 hover:brightness-75"
+        >
+          <Copy className="aspect-square h-5" /> Copy
+        </motion.button>
+      </motion.div>
     </motion.div>
   );
 };
