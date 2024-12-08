@@ -35,18 +35,23 @@ export const Navbar = () => {
     },
     {
       label: "Source Code",
-      url: "/sourcecode",
-      isActive: pathname === "/sourcecode",
+      url: "https://github.com/Riverif/shortstory-ai",
+      isActive: false,
     },
     {
       label: "Contact",
-      url: "/contact",
-      isActive: pathname === "/contact",
+      url: "mailto:rifkialfiann@gmail.com",
+      isActive: false,
     },
   ];
 
   return (
-    <div className="flex h-full w-full items-center justify-between px-6 md:px-[120px]">
+    <div
+      className={cn(
+        "flex h-full w-full items-center justify-between px-6 md:px-[120px]",
+        !routes[0].isActive && "bg-background",
+      )}
+    >
       <Link href="/" className={cn("md:text-2xl", useFontRye.className)}>
         Short Story AI
       </Link>

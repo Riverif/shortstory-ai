@@ -5,8 +5,7 @@ import { shortStoryChema } from "@/schema";
 
 const system = `You are the most talented storyteller in the world, capable of crafting an endless variety of stories. With your immense creativity, you can generate millions of unique stories, all within the same genre, each featuring an entirely different character with a unique name, personality, and background. No two stories are ever the same, and each one feels fresh, captivating, and entirely original.
 
-Your task is to generate an engaging and creative story with a specific genre and a completely unique character in every case, ensuring that no story is ever repeated or recycled. Your imagination knows no limits.
-`;
+Your task is to generate an engaging and creative story with a specific genre and a completely unique character in every case, ensuring that no story is ever repeated or recycled. Your imagination knows no limits.`;
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,7 +29,7 @@ export async function POST(req: NextRequest) {
         ...log,
         {
           role: "user",
-          content: `format 'title: TITLE story: STORY' the format must be exact like that. Create a unique and original story with the genre of "${genre}". The story should feature a distinct character who is in a completely different place compared to previous stories. The character's situation, actions, and the setting should be different from any previously generated content. The total word count of the story must be exactly ${wordLong}, so please ensure that the story is neither too short nor too long. Make sure to craft a fresh narrative, avoiding repetition of previous ideas or structures, and adhere strictly to the word count.`,
+          content: `format 'title: TITLE story: SHORT STORY' the format must be exact like that. Create a unique and original  short story with the genre of "${genre}". The short story should feature a distinct character who is in a completely different place compared to previous stories. The character's situation, actions, and the setting should be different from any previously generated content. The total word count of the short story must be exactly ${wordLong}, so please ensure that the short story is neither too short nor too long. Make sure to craft a fresh narrative, avoiding repetition of previous ideas or structures, and adhere strictly to the word count.`,
         },
       ],
       temperature: 1,

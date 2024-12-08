@@ -1,9 +1,9 @@
 const AboutPage = () => {
   return (
     <div className="flex flex-col items-center">
-      <div className="w-[600px]">
-        <h1 className="text-4xl">About The Creator</h1>
-        <p className="whitespace-pre-wrap">
+      <div className="pb-10 md:w-[600px]">
+        <h1 className="text-2xl md:text-4xl">About</h1>
+        <p className="whitespace-pre-wrap text-sm md:text-base">
           {`
 Hi, my name is Rifki Alfian Nahar. I have been a Next.js developer for one year, specializing in creating fast, scalable, and user-friendly websites. I am passionate about leveraging modern technologies to bring innovative ideas to life.
 
