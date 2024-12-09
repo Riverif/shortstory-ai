@@ -30,8 +30,8 @@ import { shortStoryChema } from "@/schema";
 
 import { ShortStory } from "./short-story";
 
+// Animation stage for components
 const transitionSet: Transition = { ease: "easeOut", duration: 0.4 };
-
 const initVar: Variants = {
   init: { y: 20, opacity: 0, transition: transitionSet },
   start: {
@@ -44,6 +44,7 @@ const initVar: Variants = {
 
 type AnimState = "start" | "generate" | "finish";
 
+//Log is to create memory for AI that AI know story that it told before
 export type Log = {
   role: "user" | "assistant" | "system";
   content: string;
@@ -199,6 +200,8 @@ export const HomeClient = () => {
           </form>
         </Form>
       </motion.div>
+
+      {/* Story Display */}
       <motion.div
         animate={animState}
         className="absolute left-[50%] top-[45%] translate-x-[-50%] translate-y-[-50%]"

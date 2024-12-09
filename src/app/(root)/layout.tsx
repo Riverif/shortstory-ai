@@ -6,7 +6,7 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="">
+    <div>
       <div className="fixed inset-0 h-[80px] w-full">
         <Navbar />
       </div>

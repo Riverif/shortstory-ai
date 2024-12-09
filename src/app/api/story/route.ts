@@ -3,6 +3,7 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { NextRequest, NextResponse } from "next/server";
 import { shortStoryChema } from "@/schema";
 
+//prompt to define role of AI
 const system = `You are the most talented storyteller in the world, capable of crafting an endless variety of stories. With your immense creativity, you can generate millions of unique stories, all within the same genre, each featuring an entirely different character with a unique name, personality, and background. No two stories are ever the same, and each one feels fresh, captivating, and entirely original.
 
 Your task is to generate an engaging and creative story with a specific genre and a completely unique character in every case, ensuring that no story is ever repeated or recycled. Your imagination knows no limits.`;
@@ -22,8 +23,9 @@ export async function POST(req: NextRequest) {
       apiKey: process.env.GEMINI_API_KEY,
     });
 
+    //Generate text with ai SDK from vercel
     const result = await generateText({
-      model: google("gemini-1.5-flash"),
+      model: google("gemini-1.5-flash"), //Change version of Gemini here
       system,
       messages: [
         ...log,
@@ -36,12 +38,13 @@ export async function POST(req: NextRequest) {
       maxTokens: wordLong + 100,
     });
 
+    //Response the result
     return NextResponse.json(
       { log: result.response.messages, story: result.text },
       { status: 201 },
     );
   } catch (error) {
-    console.error("Error in storyAI API:", error);
+    console.error("[ERROR_STORY_API]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

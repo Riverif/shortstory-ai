@@ -4,6 +4,7 @@ import { HomeClient } from "./_components/client";
 export default function Home() {
   return (
     <main className="h-full w-full">
+      {/* Background Homepage */}
       <Image
         src="/background/bg.jpg"
         fill

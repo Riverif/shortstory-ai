@@ -1,9 +1,10 @@
 "use client";
 
-import { useToast } from "@/hooks/use-toast";
-import { parseStory } from "@/lib/story-format";
-import { Copy, Loader2, XCircle } from "lucide-react";
 import { motion, Variants } from "motion/react";
+import { Copy, Loader2, XCircle } from "lucide-react";
+
+import { useToast } from "@/hooks/use-toast";
+import { formatStory } from "@/lib/story-format";
 
 const containerVar: Variants = {
   start: { opacity: 0, scale: 0 },
@@ -30,9 +31,11 @@ export const ShortStory = ({
   close: () => void;
   story?: string;
 }) => {
-  const theStory = parseStory(story);
   const { toast } = useToast();
 
+  const theStory = formatStory(story); //Format story, theStory = {title: TITLE, story: STORY}
+
+  //Copy function
   const copyCodeToClipboard = () => {
     navigator.clipboard
       .writeText(story || "")
@@ -49,11 +52,14 @@ export const ShortStory = ({
       variants={containerVar}
       className="relative flex aspect-square w-14 items-center justify-center bg-background opacity-0"
     >
+      {/* Loader */}
       <motion.div
         variants={{ generate: { opacity: 1 }, finish: { opacity: 0 } }}
       >
         <Loader2 className="w-6 animate-spin" />
       </motion.div>
+
+      {/* Story Container */}
       <motion.div
         variants={{ generate: { opacity: 0 }, finish: { opacity: 1 } }}
         className="absolute inset-0 flex h-[87%] flex-col gap-2 overflow-y-scroll px-6 pt-6"
@@ -63,6 +69,8 @@ export const ShortStory = ({
           {theStory.story}
         </p>
       </motion.div>
+
+      {/* Close and Copy Button */}
       <motion.div
         variants={{ generate: { opacity: 0 }, finish: { opacity: 1 } }}
         className="absolute bottom-5 flex gap-5 rounded-full"
