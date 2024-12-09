@@ -16,7 +16,7 @@ GEMINI_API_KEY=geminiapikeyhere
 After that run npm installation
 
 ```
-npm run install --legacy-peer-deps
+npm install --legacy-peer-deps
 ```
 
 After installation run command to build nextjs project
